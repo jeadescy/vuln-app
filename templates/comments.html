@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Comments - Vulnerable Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="comments-container">
+        <!-- Comment Input Section -->
+        <div class="comment-input-section">
+            <div class="comment-input-wrapper">
+                <textarea 
+                    id="comment-input" 
+                    name="comment" 
+                    placeholder="Add comment..." 
+                    rows="3"
+                    class="comment-textarea"></textarea>
+                
+                <div class="formatting-toolbar">
+                    <div class="formatting-buttons">
+                        <button type="button" class="format-btn" title="Bold"><i class="fas fa-bold"></i></button>
+                        <button type="button" class="format-btn" title="Italic"><i class="fas fa-italic"></i></button>
+                        <button type="button" class="format-btn" title="Underline"><i class="fas fa-underline"></i></button>
+                        <button type="button" class="format-btn" title="Link"><i class="fas fa-link"></i></button>
+                        <button type="button" class="format-btn" title="Image"><i class="fas fa-image"></i></button>
+                        <button type="button" class="format-btn" title="Emoji"><i class="far fa-smile"></i></button>
+                        <button type="button" class="format-btn" title="Mention"><i class="fas fa-at"></i></button>
+                    </div>
+                    <button type="submit" class="submit-btn" form="comment-form">
+                        <i class="fas fa-paper-plane"></i> Submit
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Comments Header -->
+        <div class="comments-header">
+            <div class="comments-title">
+                <h2>Comments</h2>
+                <span class="comment-count-badge">{{ comments|length if comments else 0 }}</span>
+            </div>
+            <div class="sort-dropdown">
+                <i class="fas fa-sort"></i>
+                <span>Most recent</span>
+                <i class="fas fa-chevron-down"></i>
+            </div>
+        </div>
+
+        <!-- Comments Section -->
+        <div class="comments-list">
+            {% if comments %}
+                {% for comment in comments %}
+                <div class="comment-item">
+                    <div class="comment-avatar">
+                        <img src="https://ui-avatars.com/api/?name={{ comment[0] }}&background=random&color=fff&size=40" 
+                             alt="{{ comment[0] }}" class="avatar-img">
+                    </div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">{{ comment[0] }}</span>
+                            <span class="comment-timestamp">{{ comment[2] }}</span>
+                        </div>
+                        <!-- ⚠️ INTENTIONAL VULNERABILITY: XSS - No HTML escaping -->
+                        <div class="comment-text">{{ comment[1] | safe }}</div>
+                        <div class="comment-actions">
+                            <button class="action-btn like-btn active">
+                                <i class="fas fa-thumbs-up"></i>
+                                <span class="action-count">25</span>
+                            </button>
+                            <button class="action-btn dislike-btn">
+                                <i class="fas fa-thumbs-down"></i>
+                                <span class="action-count">3</span>
+                            </button>
+                            <button class="action-btn reply-btn">
+                                <i class="fas fa-reply"></i>
+                                <span>Reply</span>
+                            </button>
+                            <button class="action-btn more-btn">
+                                <i class="fas fa-ellipsis-h"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            {% else %}
+                <div class="no-comments">
+                    <p>No comments yet. Be the first to comment!</p>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Hidden form for submission -->
+        <form id="comment-form" method="POST" style="display: none;">
+            <textarea name="comment" id="hidden-comment-input"></textarea>
+        </form>
+
+        <div class="navigation-links">
+            <a href="/logout" class="nav-link">Logout</a>
+            <a href="/" class="nav-link">Back to Home</a>
+        </div>
+    </div>
+
+    <script>
+        // Handle comment submission
+        document.addEventListener('DOMContentLoaded', function() {
+            const commentInput = document.getElementById('comment-input');
+            const hiddenInput = document.getElementById('hidden-comment-input');
+            const submitBtn = document.querySelector('.submit-btn');
+            const commentForm = document.getElementById('comment-form');
+
+            submitBtn.addEventListener('click', function() {
+                hiddenInput.value = commentInput.value;
+                commentForm.submit();
+            });
+
+            // Handle action buttons
+            document.querySelectorAll('.action-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.classList.contains('like-btn') || this.classList.contains('dislike-btn')) {
+                        this.classList.toggle('active');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html> 

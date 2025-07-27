@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vulnerable Web App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-shield-alt"></i>
+                <span>VulnApp</span>
+            </div>
+            <nav class="nav-menu">
+                <a href="/" class="nav-link active">Home</a>
+                <a href="/comments" class="nav-link">Comments</a>
+                <a href="/login" class="nav-link">Login</a>
+                <a href="/register" class="nav-link">Register</a>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <i class="fas fa-bug"></i>
+                    Vulnerable Web Application
+                </h1>
+                <p class="hero-subtitle">
+                    A deliberately vulnerable web application designed for security practice and penetration testing training.
+                </p>
+                <div class="hero-buttons">
+                    <a href="/register" class="hero-btn primary">
+                        <i class="fas fa-user-plus"></i>
+                        Get Started
+                    </a>
+                    <a href="/comments" class="hero-btn secondary">
+                        <i class="fas fa-comments"></i>
+                        View Comments
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="security-icons">
+                    <i class="fas fa-lock"></i>
+                    <i class="fas fa-unlock"></i>
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Features Section -->
+            <section class="features">
+                <h2 class="section-title">Built-in Vulnerabilities</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-database"></i>
+                        </div>
+                        <h3>SQL Injection</h3>
+                        <p>Vulnerable login and registration forms with SQL injection vulnerabilities for testing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h3>XSS (Cross-Site Scripting)</h3>
+                        <p>Comment system with XSS vulnerabilities allowing script injection and execution.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Weak Password Hashing</h3>
+                        <p>MD5 hashing implementation demonstrating poor security practices.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-cookie-bite"></i>
+                        </div>
+                        <h3>Predictable Sessions</h3>
+                        <p>Session management with predictable cookie generation and weak security.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA Section -->
+            <section class="cta-section">
+                <div class="cta-content">
+                    <h2>Ready to Practice Security?</h2>
+                    <p>Start exploring the vulnerabilities and learn about web application security.</p>
+                    <div class="cta-buttons">
+                        <a href="/register" class="btn primary">
+                            <i class="fas fa-user-plus"></i>
+                            Register Now
+                        </a>
+                        <a href="/login" class="btn secondary">
+                            <i class="fas fa-sign-in-alt"></i>
+                            Login
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>VulnApp</h3>
+                    <p>A deliberately vulnerable web application for security practice and education.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-section">
+                    <h4>Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/comments">Comments</a></li>
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">Register</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Vulnerabilities</h4>
+                    <ul class="footer-links">
+                        <li>SQL Injection</li>
+                        <li>XSS Attacks</li>
+                        <li>Weak Authentication</li>
+                        <li>Session Management</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Contact</h4>
+                    <p>For educational purposes only.</p>
+                    <p>Do not use in production environments.</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 VulnApp. Educational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.addEventListener('DOMContentLoaded', function() {
+            const mobileMenuToggle = document.querySelector('.mobile-menu-toggle');
+            const navMenu = document.querySelector('.nav-menu');
+            
+            mobileMenuToggle.addEventListener('click', function() {
+                navMenu.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html> 
